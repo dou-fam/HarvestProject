@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://bv706pdcqdgow"]
+
+[ext_resource type="Script" uid="uid://dwvcdhojulk0m" path="res://enemy.gd" id="1_4gyqm"]
+[ext_resource type="Texture2D" uid="uid://daj88cgcab037" path="res://Untitled 11-22-2026 03-37-24.png" id="2_4gyqm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7k104"]
+atlas = ExtResource("2_4gyqm")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4gyqm"]
+atlas = ExtResource("2_4gyqm")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qi2p4"]
+atlas = ExtResource("2_4gyqm")
+region = Rect2(0, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iifgy"]
+atlas = ExtResource("2_4gyqm")
+region = Rect2(192, 192, 192, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gyc6d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7k104")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4gyqm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qi2p4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iifgy")
+}],
+"loop": 1,
+"name": &"move",
+"speed": 4.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6qx4q"]
+size = Vector2(52, 11)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g7b7a"]
+radius = 16.03122
+
+[node name="enemy" type="Area2D" unique_id=1596439380]
+script = ExtResource("1_4gyqm")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2018870203]
+texture_filter = 1
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_gyc6d")
+animation = &"move"
+autoplay = "move"
+frame_progress = 0.2881417
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=893467035]
+position = Vector2(0, 22.5)
+shape = SubResource("RectangleShape2D_6qx4q")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=1153784985]
+position = Vector2(0, 12)
+shape = SubResource("CircleShape2D_g7b7a")
+
+[node name="Timer" type="Timer" parent="." unique_id=214807758]
+wait_time = 4.0
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

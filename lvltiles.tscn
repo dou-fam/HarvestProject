@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://biv1k7d631qr3"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ar47l"]
+
+[node name="Node2D" type="Node2D" unique_id=149936196]
+
+[node name="floor" type="MeshInstance2D" parent="." unique_id=358645963]
+mesh = SubResource("BoxMesh_ar47l")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="floor" unique_id=653329531]
+
+[node name="platforms" type="MeshInstance2D" parent="." unique_id=450713079]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="platforms" unique_id=1746158453]
