@@ -7,21 +7,22 @@ const JUMP_VELOCITY = -550.0
 const ACCEL = 1500.0
 var dead = false
 var jump_multiplier = 1.0
-const COYOTE_TIME = 0.15
+const COYOTE_TIME = 0.30
 var coyote: float = 0.0
 var spawn_point = Vector2.ZERO
 @export var gear_texture: Texture2D
 var character_direction : Vector2
+var player_gravity: float = 1000.0
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if is_on_floor():
 		SPEED = 200
 	if not is_on_floor():
-		velocity += get_gravity() * delta
+		velocity.y += player_gravity * delta
 		SPEED = 175
 
-	if is_on_floor():
+	if is_on_floor() or is_on_wall_only():
 		coyote = COYOTE_TIME
 	else:
 		coyote -= delta
@@ -39,6 +40,10 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 	
+	if is_on_wall_only() and velocity.y > 0:
+		player_gravity = 75
+	else:
+		player_gravity = get_gravity().y
 
 	if not is_on_floor():
 		sprite_2d.animation = 'jump'
@@ -60,6 +65,7 @@ func _physics_process(delta: float) -> void:
 
 func _ready():
 	spawn_point = global_position
+	player_gravity = get_gravity().y
 
 func activate_jump_boost():
 	jump_multiplier = 1.2
@@ -89,7 +95,7 @@ func spawn_player(pos):
 	#$AnimationPlayer.play_backwards("deathani")
 	#tween.tween_property($deathring, "global_position", spawn_point, 0.2)
 	#await tween.finished
-	$Camera2D.add_trauma(1.0)
+	$Camera2D.add_trauma(0.7)
 	global_position = spawn_point
 	$deathring.position = Vector2.ZERO
 	velocity = Vector2.ZERO

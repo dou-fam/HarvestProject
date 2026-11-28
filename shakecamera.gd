@@ -22,7 +22,7 @@ func _process(delta : float) -> void:
 
 ## The function to use for adding trauma (screen shake)
 func add_trauma(amount : float) -> void:
-	trauma = min(trauma + amount, 1.0) # Add the amount of trauma (capped at 1.0)
+	trauma = min(trauma + amount, 100.0) # Add the amount of trauma (capped at 1.0)
 
 ## This function is used to actually apply the shake to the camera
 func shake() -> void:
